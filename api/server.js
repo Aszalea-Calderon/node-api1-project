@@ -41,6 +41,59 @@ server.get("/users", async (req, res) => {
   }
 });
 
+//[GET] (R of CRUD, fetch single users)
+server.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const use = await theModel.findById(id);
+    if (use) {
+      res.json(use);
+    } else {
+      res.status(404).json({ message: "Incorrect Id" });
+    }
+    res.json(use);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+// [DELETE] (D of CRUD, remove it with id
+server.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const use = await theModel.remove(id);
+    if (use) {
+      res.json(use);
+    } else {
+      res.status(404).json({ message: "bad id" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+//[Put] (U of CRUD, update)
+
+server.put("users/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = req.body;
+
+  try {
+    const updateUser = await theModel.update(id, user);
+    {
+      if (updateUser) {
+        res.json(updateUser);
+      } else {
+        res.status(404).json({ message: "bad id" });
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
 //Export at the bottom
 module.exports = server;
 
