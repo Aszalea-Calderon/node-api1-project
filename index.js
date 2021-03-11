@@ -1,18 +1,9 @@
-const express = require("express");
-const generate = require("shortid").generate;
+const app = require("./api/server.js");
 
-const app = express();
-app.use(express.json());
-const server = require("./api/server");
+//Setting up the port
+const PORT = 5000;
 
-const port = 5000;
-
-//Starting data//
-let datData = [
-  { id: generate(), name: "Jane Doe", bio: "Having fun" },
-  { id: generate(), name: "Don Doe", bio: "Doing my thing" },
-];
-
-app.listen(port, () => {
-  console.log(`Server is on port: ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
 });
+//
