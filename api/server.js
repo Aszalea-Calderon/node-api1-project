@@ -17,7 +17,6 @@ server.get("/", (req, res) => {
 // [POST] (C of CRUD, create new user from JSON Payload)
 server.post("/users", async (req, res) => {
   const user = req.body;
-
   if (!user.name || !user.bio) {
     res.status(400).json({ message: "Name and bio required" });
   } else {
@@ -28,6 +27,17 @@ server.post("/users", async (req, res) => {
       console.log(err);
       res.status(500).json({ error: err });
     }
+  }
+});
+
+//[GET] (R of CRUD, fetch all users)
+server.get("/users", async (req, res) => {
+  try {
+    const use = await theModel.find();
+    res.json(use);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
   }
 });
 
